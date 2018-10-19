@@ -12,5 +12,5 @@
 * [SerializeField] -> above a variable allows the variable to be private but still show up in the Unity editor.
 * Update functions from parent scripts are able to be overrwritten and then called in the child script to allow ordering of functions. 
   * For example, the Move() from parent 'character' script needs the direction variable value from GetInput() from child 'player' script.
-
+* Use 'protected' access level for variables to allow the variable to be private but also be accessed by children scripts.
 
