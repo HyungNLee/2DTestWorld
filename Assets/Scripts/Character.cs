@@ -8,25 +8,78 @@ public abstract class Character : MonoBehaviour {
   // SerializeField lets the class be public but show up in editor.
   [SerializeField]
   protected float speed;
+  [SerializeField]
+  protected Rigidbody2D rb;
+
+  // State controller/
+  protected enum CharacterState {Ready, Dashing};
+  protected CharacterState currentState;
 
   // Direction of character.
   // 'Protected' means everything that inhertits from this script can access it.
   protected Vector2 direction;
 
+  // Dashing variables.
+  public float dashSpeed;
+  private float dashTime;
+  public float startDashTime;
+
 	// Use this for initialization
 	void Start () {
-		
+		rb = GetComponent<Rigidbody2D>();
+    currentState = CharacterState.Ready;
+
+    // Dash time
+    dashTime = startDashTime;
 	}
 	
 	// Update is called once per frame
   // Made this 'virtual' so the script that inherits from this class can override this Update() method.
 	protected virtual void Update () {
-		Move();
+    // For some reason the Start() fails to grab rigidbody component at times.
+    if (rb == null)
+    {
+      rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Let's player control movement when in ready state;
+    if (currentState == CharacterState.Ready)
+    {
+      Move();
+    }
+
+    // Dashing loop
+    if (currentState == CharacterState.Dashing)
+    {
+      Dash();
+    }
 	}
 
   // Moves the player according to input from GetInput().
   public void Move()
   {
-    transform.Translate(direction * speed * Time.deltaTime);
+    rb.MovePosition(rb.position + direction * speed * Time.deltaTime);
+  }
+
+  public void StartDash()
+  {
+    currentState = CharacterState.Dashing;
+  }
+
+  // Dashes the character in the direction the character is moving.
+  // * Will probably need to rewrite this dash function to take into account the character's rotation instead of Vector2.direction.
+  public void Dash()
+  {
+    if (dashTime <= 0)
+    {
+      currentState = CharacterState.Ready;
+      dashTime = startDashTime;
+      rb.velocity = Vector2.zero;
+    }
+    else
+    {
+      dashTime -= Time.deltaTime;
+      rb.velocity = direction * dashSpeed;
+    }
   }
 }

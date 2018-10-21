@@ -15,6 +15,7 @@ public class Player : Character {
 	protected override void Update () 
   {
 		GetInput();
+    GetDashInput();
 
     // base means to access the script that this player script inherits from. In this case, the character script.
     base.Update();
@@ -35,6 +36,14 @@ public class Player : Character {
     }
     if (Input.GetKey(KeyCode.D)) {
       direction += Vector2.right;
+    }
+  }
+
+  private void GetDashInput()
+  {
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+      base.StartDash();
     }
   }
 }
