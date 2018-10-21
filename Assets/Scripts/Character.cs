@@ -23,6 +23,8 @@ public abstract class Character : MonoBehaviour {
   public float dashSpeed;
   private float dashTime;
   public float startDashTime;
+    // Use dashDirection so user can't change dash direction mid-dash.
+  private Vector2 dashDirection;
 
 	// Use this for initialization
 	void Start () {
@@ -63,7 +65,11 @@ public abstract class Character : MonoBehaviour {
 
   public void StartDash()
   {
-    currentState = CharacterState.Dashing;
+    if (currentState == CharacterState.Ready)
+    {
+      currentState = CharacterState.Dashing;
+      dashDirection = direction;
+    }
   }
 
   // Dashes the character in the direction the character is moving.
@@ -79,7 +85,7 @@ public abstract class Character : MonoBehaviour {
     else
     {
       dashTime -= Time.deltaTime;
-      rb.velocity = direction * dashSpeed;
+      rb.velocity = dashDirection * dashSpeed;
     }
   }
 }

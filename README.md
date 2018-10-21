@@ -5,6 +5,7 @@
 ### Implemented 
 * Player movement. Added 'player' script which inherits from 'character' script.
   * 10/21/2018 -> Rewrote Move() in 'character' script to use RigidBody2D and .MovePosition instead of transform.Translate to allow usage of colliders to create boundaries.
+  * Used .Normalize on Vector2 direction to make diagonal move distance the same as horizontal and vertical.
   * Added dashing functionality with the hotkey 'Space'.
   * Added enum states to character script.
 
