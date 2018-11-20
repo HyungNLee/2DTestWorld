@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 70096688}
   - component: {fileID: 70096687}
   m_Layer: 0
-  m_Name: Boundary
-  m_TagString: Untagged
+  m_Name: GameBoundary
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -101,8 +101,12 @@ public abstract class Character : MonoBehaviour {
   {
     if (currentState == CharacterState.Ready)
     {
+      // Need to change rotation based on mouse rotation instead of character rotation.
       currentState = CharacterState.Action;
       GameObject spell = Instantiate(spellOneProjectile, projectileLaunchPoint.transform.position, projectileLaunchPoint.transform.rotation);
+
+      // Need way to set currentState back to ready after casting animation.
+      currentState = CharacterState.Ready;
     }
   }
 }
