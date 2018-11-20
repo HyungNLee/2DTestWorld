@@ -2,39 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character {
+public class Player : Character
+{
+  // Use this for initialization
+  void Start()
+  {
+    speed = 5f;
+    dashSpeed = 30f;
+    startDashTime = 0.1f;
+    dashTime = startDashTime;
+  }
 
-	// Use this for initialization
-	void Start () 
-  {
-		speed = 5f;
-	}
-	
-	// Update is called once per frame
+  // Update is called once per frame
   // Wrote 'override' so this class can override the Update() in the character script.
-	protected override void Update () 
+  protected override void Update()
   {
-		GetInput();
+    GetInput();
 
     // base means to access the script that this player script inherits from. In this case, the character script.
     base.Update();
-	}
+  }
 
   private void GetInput()
   {
     direction = Vector2.zero;
-    
+
     // Directional inputs.
-    if (Input.GetKey(KeyCode.W)) {
+    if (Input.GetKey(KeyCode.W))
+    {
       direction += Vector2.up;
     }
-    if (Input.GetKey(KeyCode.A)) {
+    if (Input.GetKey(KeyCode.A))
+    {
       direction += Vector2.left;
     }
-    if (Input.GetKey(KeyCode.S)) {
+    if (Input.GetKey(KeyCode.S))
+    {
       direction += Vector2.down;
     }
-    if (Input.GetKey(KeyCode.D)) {
+    if (Input.GetKey(KeyCode.D))
+    {
       direction += Vector2.right;
     }
     direction.Normalize();
@@ -44,5 +51,17 @@ public class Player : Character {
     {
       base.StartDash();
     }
+
+    // Right click input.
+    if (Input.GetMouseButtonDown(1))
+    {
+      CastRightClickSpell();
+    }
+  }
+
+  // Cast right click spell.
+  public void CastRightClickSpell()
+  {
+    base.SpellOne();
   }
 }

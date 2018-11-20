@@ -12,7 +12,7 @@ public abstract class Character : MonoBehaviour {
   protected Rigidbody2D rb;
 
   // State controller/
-  protected enum CharacterState {Ready, Dashing};
+  protected enum CharacterState {Ready, Dashing, Action};
   protected CharacterState currentState;
 
   // Direction of character.
@@ -21,10 +21,16 @@ public abstract class Character : MonoBehaviour {
 
   // Dashing variables.
   public float dashSpeed;
-  private float dashTime;
+  protected float dashTime;
   public float startDashTime;
     // Use dashDirection so user can't change dash direction mid-dash.
   private Vector2 dashDirection;
+
+  // Spell variables
+  public GameObject projectileLaunchPoint;
+  public GameObject spellOneProjectile;
+
+  // ************************************** 
 
 	// Use this for initialization
 	void Start () {
@@ -86,6 +92,17 @@ public abstract class Character : MonoBehaviour {
     {
       dashTime -= Time.deltaTime;
       rb.velocity = dashDirection * dashSpeed;
+    }
+  }
+
+  // Spell one cast
+  // ** For spells, maybe instead of hardcoding spells here. Have a separate script of all spells and use variables to store which spells the characters have and call those variables here.
+  public void SpellOne()
+  {
+    if (currentState == CharacterState.Ready)
+    {
+      currentState = CharacterState.Action;
+      GameObject spell = Instantiate(spellOneProjectile, projectileLaunchPoint.transform.position, projectileLaunchPoint.transform.rotation);
     }
   }
 }
